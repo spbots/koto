@@ -1,7 +1,7 @@
 use {
     crate::{
         runtime_error, value_iterator::ValueIteratorOutput as Output, value_sort::compare_values,
-        RuntimeResult, Value, ValueHashMap, ValueIterator, ValueKey, ValueMap, Vm,
+        MetaKey, RuntimeResult, Value, ValueHashMap, ValueIterator, ValueKey, ValueMap, Vm,
     },
     std::{cmp::Ordering, ops::Deref},
 };
@@ -65,6 +65,54 @@ pub fn make_module() -> ValueMap {
             }
         }
         _ => runtime_error!("map.get_index: Expected map and index as arguments"),
+    });
+
+    result.add_fn("help", |vm, args| {
+        let result = match vm.get_args(args) {
+            [Map(m)] if m.contents().meta.contains_key(&MetaKey::Help) => {
+                let help = "\
+Call this function with the name of the item that you would like help with.
+
+For example:
+  import number
+  number.help \"abs\"
+"
+                .to_string();
+
+                match m.contents().meta.get(&MetaKey::SelfHelp) {
+                    Some(Value::Str(self_help)) => {
+                        Value::Str(format!("{}\n\n========\n\n{}", self_help, help).into())
+                    }
+                    _ => Value::Str(help.to_string().into()),
+                }
+            }
+            [Map(m)] if m.contents().meta.contains_key(&MetaKey::SelfHelp) => {
+                match m.contents().meta.get(&MetaKey::SelfHelp) {
+                    Some(self_help @ Value::Str(_)) => self_help.clone(),
+                    Some(unexpected) => {
+                        return runtime_error!(
+                            "map.help: Expected string for self help, found '{}'",
+                            unexpected.type_as_string()
+                        )
+                    }
+                    None => unreachable!(),
+                }
+            }
+            [Map(_)] => Value::Str("map.help: No help found".into()),
+            [Map(m), Str(s)] => {
+                let result = match m.contents().meta.get(&MetaKey::Help) {
+                    Some(Value::Map(help)) => {
+                        help.contents().data.get_with_string(&s.as_str()).cloned()
+                    }
+                    _ => None,
+                };
+
+                result.unwrap_or_else(|| Value::Str(format!("Help not found for '{}'", s).into()))
+            }
+            _ => return runtime_error!("map.help: Expected map and string as arguments"),
+        };
+
+        Ok(result)
     });
 
     result.add_fn("insert", |vm, args| match vm.get_args(args) {

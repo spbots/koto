@@ -11,6 +11,7 @@ keywords = ["scripting", "language", "koto"]
 
 [features]
 default = []
+help = ["koto_runtime/help"]
 panic_on_runtime_error = ["koto_runtime/panic_on_runtime_error"]
 
 [dependencies]

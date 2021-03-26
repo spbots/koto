@@ -34,5 +34,5 @@ pub use {
     value_number::ValueNumber,
     value_string::ValueString,
     value_tuple::ValueTuple,
-    vm::{Vm, VmSettings},
+    vm::{SharedContext, Vm, VmSettings},
 };

@@ -157,5 +157,11 @@ pub fn make_module() -> ValueMap {
 
     bitwise_fn!(xor, ^);
 
+    #[cfg(feature = "help")]
+    super::help::add_help_from_markdown(
+        &mut result,
+        include_str!("../../../../docs/reference/number.md"),
+    );
+
     result
 }

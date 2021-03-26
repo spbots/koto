@@ -184,6 +184,8 @@ impl fmt::Display for UnaryOp {
 pub enum MetaKey {
     BinaryOp(BinaryOp),
     UnaryOp(UnaryOp),
+    Help,
+    SelfHelp,
     Type,
 }
 
@@ -313,6 +315,23 @@ impl ValueMap {
         f: impl Fn(&mut Vm, &Args) -> RuntimeResult + Send + Sync + 'static,
     ) {
         self.add_value(id, Value::ExternalFunction(ExternalFunction::new(f, false)));
+    }
+
+    pub fn add_help(&mut self, id: &str, help: &str) {
+        match self
+            .contents_mut()
+            .meta
+            .entry(MetaKey::Help)
+            .or_insert_with(|| Value::Map(ValueMap::default()))
+        {
+            Value::Map(map) => map.add_value(id, Value::Str(help.into())),
+            _ => panic!(""),
+        }
+    }
+
+    /// Adds a help string for the current map
+    pub fn add_self_help(&mut self, help: &str) {
+        self.contents_mut().meta.insert(MetaKey::SelfHelp, Value::Str(help.into()));
     }
 
     #[inline]

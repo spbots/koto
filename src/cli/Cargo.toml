@@ -18,7 +18,7 @@ default = []
 jemalloc = ["jemallocator"]
 
 [dependencies]
-koto = { path = "../koto", version = "^0.7.0"}
+koto = { path = "../koto", version = "^0.7.0", features = ["help"]}
 koto_json = { path = "../../libs/json", version = "^0.7.0"}
 koto_random = { path = "../../libs/random", version = "^0.7.0"}
 koto_tempfile = { path = "../../libs/tempfile", version = "^0.7.0"}

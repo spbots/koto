@@ -15,6 +15,9 @@ pub mod test;
 pub mod thread;
 pub mod tuple;
 
+#[cfg(feature = "help")]
+mod help;
+
 use crate::ValueMap;
 
 #[derive(Clone)]

@@ -31,8 +31,8 @@ pub use {koto_bytecode as bytecode, koto_parser as parser, koto_runtime as runti
 use {
     koto_bytecode::{Chunk, LoaderError},
     koto_runtime::{
-        DefaultLogger, KotoLogger, Loader, RuntimeError, Value, ValueList, ValueMap, ValueVec, Vm,
-        VmSettings,
+        DefaultLogger, KotoLogger, Loader, RuntimeError, SharedContext, Value, ValueList,
+        ValueMap, ValueVec, Vm, VmSettings,
     },
     std::{error::Error, fmt, path::PathBuf, sync::Arc},
 };
@@ -166,7 +166,9 @@ impl Koto {
                     Some(Value::Map(tests)) => {
                         self.runtime.run_tests(tests)?;
                     }
-                    Some(other) => return Err(KotoError::InvalidTestsType(other.type_as_string())),
+                    Some(other) => {
+                        return Err(KotoError::InvalidTestsType(other.type_as_string()))
+                    }
                     None => {}
                 };
             }
@@ -180,7 +182,11 @@ impl Koto {
     }
 
     pub fn prelude(&self) -> ValueMap {
-        self.runtime.prelude()
+        self.runtime.shared_context().prelude.clone()
+    }
+
+    pub fn shared_context(&self) -> &SharedContext {
+        self.runtime.shared_context()
     }
 
     pub fn set_args(&mut self, args: &[String]) {
@@ -192,7 +198,6 @@ impl Koto {
             .collect::<ValueVec>();
 
         match self
-            .runtime
             .prelude()
             .contents_mut()
             .data
@@ -232,7 +237,6 @@ impl Koto {
         self.script_path = path;
 
         match self
-            .runtime
             .prelude()
             .contents_mut()
             .data

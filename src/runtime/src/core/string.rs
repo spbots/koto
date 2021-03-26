@@ -209,5 +209,11 @@ pub fn make_module() -> ValueMap {
         _ => runtime_error!("string.trim: Expected string as argument"),
     });
 
+    #[cfg(feature = "help")]
+    super::help::add_help_from_markdown(
+        &mut result,
+        include_str!("../../../../docs/reference/string.md"),
+    );
+
     result
 }

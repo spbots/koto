@@ -34,9 +34,9 @@ pub enum ControlFlow {
 pub type InstructionResult = Result<(), RuntimeError>;
 
 /// Context shared by all VMs across modules
-struct SharedContext {
+pub struct SharedContext {
     pub prelude: ValueMap,
-    core_lib: CoreLib,
+    pub core_lib: CoreLib,
     logger: Arc<dyn KotoLogger>,
 }
 
@@ -200,15 +200,16 @@ impl Vm {
         self.child_vm.as_mut().unwrap()
     }
 
-    pub fn prelude(&self) -> ValueMap {
-        self.context_shared.prelude.clone()
+    /// Access the context shared by all modules
+    pub fn shared_context(&self) -> &SharedContext {
+        &self.context_shared
     }
 
     fn context(&self) -> RwLockReadGuard<ModuleContext> {
         self.context.read()
     }
 
-    /// Access module context.
+    /// Access the context for the active module
     pub fn context_mut(&mut self) -> RwLockWriteGuard<ModuleContext> {
         self.context.write()
     }

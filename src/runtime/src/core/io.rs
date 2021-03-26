@@ -100,6 +100,12 @@ pub fn make_file_map() -> ValueMap {
         })
     });
 
+    #[cfg(feature = "help")]
+    super::help::add_help_from_markdown(
+        &mut file_map,
+        include_str!("../../../../docs/reference/file.md"),
+    );
+
     file_map
 }
 
@@ -209,6 +215,12 @@ pub fn make_module() -> ValueMap {
     result.add_fn("temp_dir", {
         |_, _| Ok(Str(std::env::temp_dir().to_string_lossy().as_ref().into()))
     });
+
+    #[cfg(feature = "help")]
+    super::help::add_help_from_markdown(
+        &mut result,
+        include_str!("../../../../docs/reference/io.md"),
+    );
 
     result
 }
