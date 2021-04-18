@@ -217,7 +217,9 @@ pub fn make_module() -> ValueMap {
                                         unexpected.type_as_string(),
                                     ))
                                 }
-                                Err(error) => return Some(Err(error.with_prefix("iterator.keep"))),
+                                Err(error) => {
+                                    return Some(Err(error.with_prefix("iterator.keep")))
+                                }
                             }
                         }
                         Err(error) => return Some(Err(error)),
@@ -536,6 +538,12 @@ pub fn make_module() -> ValueMap {
         }
         _ => runtime_error!("iterator.zip: Expected two iterables as arguments"),
     });
+
+    #[cfg(feature = "help")]
+    super::help::add_help_from_markdown(
+        &mut result,
+        include_str!("../../../../docs/reference/iterator.md"),
+    );
 
     result
 }
