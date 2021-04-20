@@ -331,7 +331,9 @@ impl ValueMap {
 
     /// Adds a help string for the current map
     pub fn add_self_help(&mut self, help: &str) {
-        self.contents_mut().meta.insert(MetaKey::SelfHelp, Value::Str(help.into()));
+        self.contents_mut()
+            .meta
+            .insert(MetaKey::SelfHelp, Value::Str(help.into()));
     }
 
     #[inline]
