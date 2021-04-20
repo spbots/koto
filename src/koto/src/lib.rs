@@ -166,9 +166,7 @@ impl Koto {
                     Some(Value::Map(tests)) => {
                         self.runtime.run_tests(tests)?;
                     }
-                    Some(other) => {
-                        return Err(KotoError::InvalidTestsType(other.type_as_string()))
-                    }
+                    Some(other) => return Err(KotoError::InvalidTestsType(other.type_as_string())),
                     None => {}
                 };
             }
