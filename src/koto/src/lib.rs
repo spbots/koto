@@ -31,8 +31,8 @@ pub use {koto_bytecode as bytecode, koto_parser as parser, koto_runtime as runti
 use {
     koto_bytecode::{Chunk, LoaderError},
     koto_runtime::{
-        DefaultLogger, KotoLogger, Loader, RuntimeError, SharedContext, Value, ValueList,
-        ValueMap, ValueVec, Vm, VmSettings,
+        DefaultLogger, KotoLogger, Loader, RuntimeError, SharedContext, Value, ValueList, ValueMap,
+        ValueVec, Vm, VmSettings,
     },
     std::{error::Error, fmt, path::PathBuf, sync::Arc},
 };
