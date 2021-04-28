@@ -123,3 +123,57 @@ if any of the values pass the test.
 # true
 ```
 
+## chain
+
+`|Iterable, Iterable| -> Iterator`
+
+`chain` returns an iterator that iterates over the output of the first iterator,
+followed by the output of the second iterator.
+
+### Example
+
+```koto
+(1, 2).chain(3..=5).to_tuple()
+# (1, 2, 3, 4, 5)
+```
+
+## consume
+
+`|Iterable| -> ()`
+
+Consumes the output of the iterator. This is useful when the side-effects of
+the iterator chain are important, but not so much the output value.
+
+## count
+
+`|Iterable| -> Number`
+
+Counts the number of items yielded from the iterator.
+
+### Example
+
+```koto
+(5..=15).count()
+# 10
+
+(0..100)
+  .keep |x| x % 2 == 0
+  .count()
+# 50
+```
+
+## each
+
+`|Iterable, |Value| -> Value| -> Iterator`
+
+Takes an Iterable and a Function, and returns a new iterator that provides the
+result of calling the function with each value in the iterable.
+
+### Example
+
+```koto
+(2, 3, 4)
+  .each |x| x * 2
+  .to_list()
+# [4, 6, 8]
+```
