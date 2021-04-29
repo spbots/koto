@@ -237,3 +237,264 @@ discarded.
 (0..10).keep(|x| x % 2 == 0).to_tuple()
 # (0, 2, 4, 6, 8)
 ```
+
+## max
+
+`|Iterable| -> Value`
+
+Returns the maximum value found in the iterable.
+
+A `<` 'less than' comparison is performed between each value and the maximum
+found so far, until all values in the iterator have been compared.
+
+### Example
+
+```koto
+(8, -3, 99, -1).max()
+# 99
+```
+
+### See Also
+
+- `iterator.min`
+- `iterator.min_max`
+
+## min
+
+`|Iterable| -> Value`
+
+Returns the minimum value found in the iterable.
+
+A `<` 'less than' comparison is performed between each value and the minimum
+found so far, until all values in the iterator have been compared.
+
+### Example
+
+```koto
+(8, -3, 99, -1).min()
+# -3
+```
+
+### See Also
+
+- `iterator.max`
+- `iterator.min_max`
+
+## min_max
+
+`|Iterable| -> (Value, Value)`
+
+Returns the minimum and maximum values found in the iterable.
+
+A `<` 'less than' comparison is performed between each value and both the
+minimum and maximum found so far, until all values in the iterator have been
+compared.
+
+### Example
+
+```koto
+(8, -3, 99, -1).min_max()
+# (-3, 99)
+```
+
+### See Also
+
+- `iterator.max`
+- `iterator.min`
+
+## next
+
+`|Iterator| -> Value`
+
+Returns the next value from the iterator.
+
+### Example
+
+```koto
+x = (1, 2).iter()
+x.next()
+# 1
+x.next()
+# 2
+x.next()
+# ()
+```
+
+## position
+
+`|Iterable, |Value| -> Bool| -> Value`
+
+Returns the position of the first value in the iterable that passes the test
+function.
+
+The function is called for each value in the iterator, and returns either `true`
+if the value is a match, or `false` if it's not.
+
+The first matching value will cause iteration to stop, and the number of
+steps taken to reach the matched value is returned as the result.
+
+If no match is found then `()` is returned.
+
+### Example
+
+```koto
+(10..20).position |x| x == 15
+# 5
+
+(10..20).position |x| x == 99
+# ()
+```
+
+## product
+
+`|Iterable| -> Value`
+
+Returns the result of multiplying each value in the iterable together.
+
+### Example
+
+```koto
+(2, 3, 4).product()
+# 24
+```
+
+### See also
+
+- `iterator.fold`
+- `iterator.sum`
+
+## skip
+
+`|Iterable, Number| -> Iterator`
+
+Skips over a number of steps in the iterator.
+
+### Example
+
+```koto
+(100..200).skip(50).next()
+# 150
+```
+
+### See also
+
+- `iterator.take`
+
+## sum
+
+`|Iterable| -> Value`
+
+Returns the result of adding each value in the iterable together.
+
+### Example
+
+```koto
+(2, 3, 4).sum()
+# 9
+```
+
+### See also
+
+- `iterator.fold`
+- `iterator.product`
+
+## take
+
+`|Iterable, Number| -> Iterator`
+
+Provides an iterator that consumes a number of values from the input before
+finishing.
+
+### Example
+
+```koto
+(100..200).take(3).to_tuple()
+# (100, 101, 102)
+```
+
+### See also
+
+- `iterator.skip`
+
+## to_list
+
+`|Iterable| -> List`
+
+Consumes all values coming from the iterator and places them in a list.
+
+### Example
+
+```koto
+("a", 42, (-1, -2)).to_list()
+# ["a", 42, (-1, -2)]
+```
+
+### See also
+
+- `iterator.to_map`
+- `iterator.to_tuple`
+
+
+
+## to_map
+
+`|Iterable| -> Map`
+
+Consumes all values coming from the iterator and places them in a map.
+
+If a value is a tuple, then the first element in the tuple will be inserted as
+the key for the map entry, and the second element will be inserted as the value.
+
+If the value is anything other than a tuple, then it will be inserted as the map
+key, with `()` as the entry's value.
+
+### Example
+
+```koto
+("a", "b", "c").to_map()
+# {"a": (), "b": (), "c": ()}
+
+("a", "bbb", "cc")
+  .each |x| x, x.size()
+  .to_map()
+# {"a": 1, "bbb": 3, "cc": 2}
+```
+
+### See also
+
+- `iterator.to_list`
+- `iterator.to_tuple`
+
+## to_tuple
+
+`|Iterable| -> Tuple`
+
+Consumes all values coming from the iterator and places them in a tuple.
+
+### Example
+
+```koto
+("a", 42, (-1, -2)).to_list()
+# ["a", 42, (-1, -2)]
+```
+
+### See also
+
+- `iterator.to_list`
+- `iterator.to_map`
+
+
+## zip
+
+`|Iterable, Iterable| -> Iterator`
+
+Combines the values in two iterables into an iterator that provides
+corresponding pairs of values, one at a time from each input iterable.
+
+### Example
+
+```koto
+(1, 2, 3).zip(("a", "b", "c")).to_list()
+# [(1, "a"), (2, "b"), (3, "c")]
+```
+
