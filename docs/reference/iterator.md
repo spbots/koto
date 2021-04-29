@@ -46,6 +46,30 @@ for x in (2, 3, 4).each |n| n * 2
 
 # Reference
 
+- [all](#all)
+- [all](#all-1)
+- [any](#any)
+- [chain](#chain)
+- [consume](#consume)
+- [count](#count)
+- [each](#each)
+- [enumerate](#enumerate)
+- [fold](#fold)
+- [keep](#keep)
+- [max](#max)
+- [min](#min)
+- [min_max](#min_max)
+- [next](#next)
+- [position](#position)
+- [product](#product)
+- [skip](#skip)
+- [sum](#sum)
+- [take](#take)
+- [to_list](#to_list)
+- [to_map](#to_map)
+- [to_tuple](#to_tuple)
+- [zip](#zip)
+
 ## all
 
 `|Iterable, Function(|Value| -> Bool)| -> Bool`
@@ -434,8 +458,6 @@ Consumes all values coming from the iterator and places them in a list.
 - `iterator.to_map`
 - `iterator.to_tuple`
 
-
-
 ## to_map
 
 `|Iterable| -> Map`
@@ -483,7 +505,6 @@ Consumes all values coming from the iterator and places them in a tuple.
 - `iterator.to_list`
 - `iterator.to_map`
 
-
 ## zip
 
 `|Iterable, Iterable| -> Iterator`
@@ -497,4 +518,3 @@ corresponding pairs of values, one at a time from each input iterable.
 (1, 2, 3).zip(("a", "b", "c")).to_list()
 # [(1, "a"), (2, "b"), (3, "c")]
 ```
-
