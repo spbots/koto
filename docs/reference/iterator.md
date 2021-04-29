@@ -177,3 +177,46 @@ result of calling the function with each value in the iterable.
   .to_list()
 # [4, 6, 8]
 ```
+
+## enumerate
+
+`|Iterable| -> Iterator`
+
+Returns an iterator that provides each value along with an associated index.
+
+### Example
+
+```koto
+("a", "b", "c").enumerate().to_list()
+# [(0, "a"), (1, "b"), (2, "c")]
+```
+
+## fold
+
+`|Iterable, Value, |Value, Value| -> Value| -> Value`
+
+Returns the result of 'folding' the iterator's values into an accumulator
+function.
+
+The function takes the accumulated value and the next iterator value,
+and then returns the result of folding the value into the accumulator.
+
+The first argument is an initial accumulated value that gets passed to the
+function along with the first value from the iterator.
+
+The result is then the final accumulated value.
+
+This operation is also known in other languages as `reduce`, `accumulate`,
+`inject`, `fold left` (along with other names), with `fold` chosen here for
+
+### Example
+
+```koto
+("a", "b", "c").fold "", |result, x| result += x + "-"
+# a-b-c-
+```
+
+### See Also
+
+- `iterator.product`
+- `iterator.sum`
