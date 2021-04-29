@@ -28,19 +28,151 @@ x # x remains unchanged after the modificaton of z
 
 ## clear
 
+`|List| -> ()`
+
+Clears the list by removing all of its elements.
+
+### Example
+
+```koto
+x = [1, 2, 3]
+x.clear()
+x
+# []
+```
+
 ## contains
+
+`|List, Value| -> Bool`
+
+Returns `true` if the list contains a value that matches the input value.
+
+Matching is performed with the `==` equality operator.
+
+### Example
+
+```koto
+[1, "hello", (99. -1)].contains "hello"
+# true
+```
 
 ## copy
 
+`|List| -> List`
+
+Makes a unique copy of the list data.
+
+Note that this only copies the first level of data, so contained lists and maps
+will share their data with their counterparts in the copy. To make a copy where
+any contained containers are also unique, use `list.deepcopy`.
+
+### Example
+
+```koto
+x = [1, 2, "hello"]
+y = x
+y[0] = "abc" # x and y share the same internal list data
+x
+# ["abc", 99, "hello"]
+
+z = x.copy()
+z[1] = -1 # z is a copy of x, so has unique internal data
+x # x remains unchanged after the modificaton of z
+# ["abc", 99, "hello"]
+```
+
+### See also
+
+- `list.deep_copy`
+
 ## deep_copy
+
+`|List| -> List`
+
+Makes a unique _deep_ copy of the list data.
+
+This makes a unique copy of the list data, and recursively makes deep copies
+of any contained container data.
+
+If only the first level of data needs to be made unique, then use `list.copy`.
+
+### Example
+
+```koto
+x = [[1, 2], [3, [4, 5]]]
+y = x.deep_copy()
+y[1][1] = 99
+x # a deep copy has been made, so x is unaffected by the assignment to y
+# [[1, 2], [3, [4, 5]]]
+```
+
+### See also
+
+- `list.copy`
 
 ## fill
 
+`|List, Value| -> ()`
+
+Fills the list with copies of the provided value.
+
+### Example
+
+```koto
+x = [1, 2, 3]
+x.fill 99
+x
+# [99, 99, 99]
+```
+
 ## first
+
+`|List| -> Value`
+
+Returns the first value in the list, or `()` if the list is empty.
+
+### Example
+
+```koto
+[99, -1, 42].first()
+# 99
+
+[].first()
+# ()
+```
 
 ## get
 
+`|List, Number| -> Value`
+
+Gets the Nth value in the list, or `()` if the list doesn't contain a value at
+that position.
+
+### Example
+
+```koto
+[99, -1, 42].get 1
+# -1
+
+[99, -1, 42].get 5
+# ()
+```
+
 ## insert
+
+`|List, Number, Value| -> ()`
+
+Inserts the value into the Nth position in the list.
+
+An error is thrown if the position is negative or greater than the size of the
+list.
+
+### Example
+
+```koto
+[99, -1, 42].insert 2, "hello"
+# [99, -1, "hello", 42]
+```
 
 ## is_empty
 
