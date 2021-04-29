@@ -141,6 +141,11 @@ Returns the first value in the list, or `()` if the list is empty.
 # ()
 ```
 
+### See also
+
+- `list.get`
+- `list.last`
+
 ## get
 
 `|List, Number| -> Value`
@@ -158,6 +163,11 @@ that position.
 # ()
 ```
 
+### See also
+
+- `list.first`
+- `list.last`
+
 ## insert
 
 `|List, Number, Value| -> ()`
@@ -174,15 +184,127 @@ list.
 # [99, -1, "hello", 42]
 ```
 
+### See also
+
+- `list.remove`
+
 ## is_empty
+
+`|List| -> Bool`
+
+Returns `true` if the list has a size of zero, and `false` otherwise.
+
+### Example
+
+```koto
+[].is_empty()
+# true
+
+[1, 2, 3].is_empty()
+# false
+```
 
 ## iter
 
+`|List| -> Iterator`
+
+Returns an iterator that iterates over the list's values.
+
+Lists are iterable, so it's not necessary to call `.iter()` to get access to
+iterator operations, but it can be useful sometimes to make an iterator for
+later use.
+
+### Example
+
+```koto
+x = [2, 3, 4].iter()
+x.skip(1)
+x.next()
+# 3
+```
+
 ## last
+
+`|List| -> Value`
+
+Returns the last value in the list, or `()` if the list is empty.
+
+### Example
+
+```koto
+[99, -1, 42].first()
+# 42
+
+[].first()
+# ()
+```
+
+### See also
+
+- `list.first`
+- `list.get`
+
+## pop
+
+`|List| -> Value`
+
+Removes the last value from the list and returns it.
+
+If the list is empty then `()` is returned.
+
+### Example
+
+```koto
+x = [99, -1, 42]
+x.pop()
+# 42
+
+x
+# [99, -1]
+
+[].pop()
+# ()
+```
+
+### See also
+
+- `list.push`
 
 ## push
 
+`|List, Value| -> ()`
+
+Adds the value to the end of the list.
+
+### Example
+
+```koto
+[99, -1].push "hello"
+# [99, -1, "hello"]
+```
+
+### See also
+
+- `list.pop`
+
 ## remove
+
+`|List, Number| -> Value`
+
+Removes the value at the given position from the list and returns it.
+
+Throws an error if the position isn't a valid index in the list.
+
+### Example
+
+```koto
+[99, -1, 42].remove 1
+# [99, 42]
+```
+
+### See also
+
+- `list.insert`
 
 ## resize
 
