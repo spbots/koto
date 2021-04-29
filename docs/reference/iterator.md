@@ -220,3 +220,20 @@ This operation is also known in other languages as `reduce`, `accumulate`,
 
 - `iterator.product`
 - `iterator.sum`
+
+## keep
+
+`|Iterable, |Value| -> Bool| -> Iterator`
+
+Returns an iterator that keeps only the values that pass a test function.
+
+The function is called for each value in the iterator, and returns either `true`
+if the value should be kept in the iterator output, or `false` if it should be
+discarded.
+
+### Example
+
+```koto
+(0..10).keep(|x| x % 2 == 0).to_tuple()
+# (0, 2, 4, 6, 8)
+```
