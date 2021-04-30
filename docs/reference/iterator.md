@@ -47,7 +47,6 @@ for x in (2, 3, 4).each |n| n * 2
 # Reference
 
 - [all](#all)
-- [all](#all-1)
 - [any](#any)
 - [chain](#chain)
 - [consume](#consume)
@@ -73,32 +72,6 @@ for x in (2, 3, 4).each |n| n * 2
 ## all
 
 `|Iterable, Function(|Value| -> Bool)| -> Bool`
-
-Checks the Iterable's values against a test Function.
-The Function should return `true` or `false`, and then `all` returns `true`
-if all values pass the test.
-
-`all` stops running as soon as it finds a failing test, and then `false` is
-returned.
-
-### Example
-
-```koto
-(1..9).all |x| x > 0
-# true
-
-("", "", "foo").all string.is_empty
-# false
-
-[10, 20, 30]
-  .each |x| x / 10
-  .all |x| x < 10
-# true
-```
-
-## all
-
-`|Iterable, |Value| -> Bool| -> Bool`
 
 Checks the Iterable's values against a test Function.
 The Function should return `true` or `false`, and then `all` returns `true`
