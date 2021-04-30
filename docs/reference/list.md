@@ -329,7 +329,46 @@ x
 
 ## retain
 
+`|List, Value| -> ()`
+
+Retains matching values in the list, discarding values that don't match.
+
+If the test value is a function, then the function will be called with each of
+the list's values, and if the function returns `true` then the value will be
+retained, otherwise if the function returns `false` then the value will be
+discarded.
+
+If the test value is not a function, then the list's values will be compared
+using the `==` equality operator, and then retained if they match.
+
+### Example
+
+```koto
+x = [1..10]
+x.retain |n| n < 5
+x
+# [1, 2, 3, 4]
+
+x = [1, 3, 8, 3, 9, -1]
+x.retain 3
+x
+# [3, 3]
+```
+
 ## reverse
+
+`|List| -> ()`
+
+Reverses the order of the list's contents.
+
+### Example
+
+```koto
+x = ["hello", -1, 99, "world"]
+x.reverse()
+x
+# ["world", 99, -1, "hello"]
+```
 
 ## size
 
